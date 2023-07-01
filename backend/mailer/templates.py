@@ -9,10 +9,10 @@ class Templates:
         <div class="page">
         <div class="top" style="background-color: #FF914D;padding: 15px 10px;font-family: sans-serif;margin: 0;border-radius: 20px 20px 0 0;box-shadow: 1px 1px 10px -6px black;width:400px;">
         <h3>Hi, {name}</h3>
-        <h1>Welcome To MapAuth</h1>
+        <h1>Welcome To Hermes</h1>
         </div>
         <div class="main" style="background-color: #F8FED8;padding: 20px 10px;font-family: sans-serif;box-shadow: 1px 1px 10px -6px black;width:400px;">
-        <p>Thank you for joining our map based user authentication system.</p>
+        <p>Thank you for joining our messaging platform.</p>
         <h4>Your OTP is:</h4>
         <h3>{otp}</h3>
         </div>
