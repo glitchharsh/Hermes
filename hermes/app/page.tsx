@@ -6,7 +6,7 @@ import man from "./images/man.png";
 import { Raleway } from "next/font/google";
 
 const raleway = Raleway({
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "700", "800"],
   style: ["normal", "italic"],
   subsets: ["latin"],
   display: "swap",
@@ -20,11 +20,11 @@ export default function Home() {
           <p className={`${raleway.className} text-xl font-medium text-center`}>
             What you want to send today?
           </p>
-          <button className="flex border-black p-3 border-2 w-[130px] items-center gap-x-3 h-[53px]">
+          <button className="flex border-black p-3 border-2 w-[130px] items-center gap-x-3 h-[53px] hover:bg-white">
             <Image src={sms} alt="sms" />
             <p className={`${raleway.className} font-medium uppercase`}>SMS</p>
           </button>
-          <button className="flex border-black p-3 border-2 w-[130px] items-center gap-x-3 h-[53px]">
+          <button className="flex border-black p-3 border-2 w-[130px] items-center gap-x-3 h-[53px] hover:bg-white">
             <Image src={email} alt="sms" />
             <p className={`${raleway.className} font-medium uppercase`}>
               Email
@@ -42,10 +42,38 @@ export default function Home() {
           <div className="mx-16 border-2 h-[150px] bg-white"></div>
         </div>
       </div>
-      <div className="w-1/2 min-h-full flex justify-center">
-        <div className="mt-5">
+      <div className="w-1/2 min-h-full flex flex-col">
+        <div className="mt-5 mx-auto">
           <Image src={logo} alt="Hermes" />
         </div>
+        <div className="mx-12">
+          <p
+            className={`${raleway.className} font-bold mt-16 text-xl text-left`}
+          >
+            Enter prompt to generate SMS Text
+          </p>
+          <textarea
+            className="border-2 h-[120px] w-full mt-3 pl-2 pt-2"
+            placeholder="Tell us what you want to write..."
+          />
+          <textarea
+            className="border-2 h-[400px] w-full mt-10 pl-2 pt-2"
+            placeholder="Generated text.."
+          />
+        </div>
+        <div className="mx-auto">
+          <button
+            className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] mt-12 font-extrabold`}
+          >
+            SEND
+          </button>
+        </div>
+        <p
+          className={`${raleway.className} text-center mt-14 font-medium text-xl`}
+        >
+          AI-Powered Messaging, Simplified:{" "}
+          <p className="text-[#0500FF] inline">Hermes</p> - Send with Impact
+        </p>
       </div>
       <div className="w-1/4 min-h-full">
         <div className="flex items-center gap-x-3 mt-5 absolute right-7">
