@@ -1,6 +1,6 @@
 const url = "https://harsh0p.pythonanywhere.com/auth/register/";
 
-const useRegister = async (name, phoneNumber, email, age, gender, password) => {
+const useRegister = async (name:string, phoneNumber:any, email:string, age:any, gender:any, password:string) => {
   let headersList = {
     Accept: "*/*",
     "Content-Type": "application/json",
