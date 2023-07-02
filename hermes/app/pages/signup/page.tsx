@@ -7,6 +7,7 @@ import { Raleway } from "next/font/google";
 import Button from "../../components/Button";
 import Select from "react-select";
 import useRegister from "@/app/hooks/useRegister";
+import { useRouter } from "next/navigation";
 
 const raleway = Raleway({
   weight: ["400", "500", "700"],
@@ -34,16 +35,19 @@ export default function Signup() {
   const [gender, setGender] = useState(null);
   const [password, setPassword] = useState("");
 
-  const handleSignup = () => {
-    console.log("Signup data:", {
+  const router = useRouter();
+
+  const handleSignup = async () => {
+    const data = await useRegister(
       name,
       phoneNumber,
       email,
       age,
       gender,
-      password,
-    });
-    useRegister(name, phoneNumber, email, age, gender, password);
+      password
+    );
+    alert(data);
+    router.push("/pages/sms");
   };
 
   return (
@@ -87,7 +91,7 @@ export default function Signup() {
           <Select
             options={options}
             className="border-2 border-black px-3 py-5 min-w-[500px] text-lg"
-            value={gender.value}
+            value={gender?.value}
             onChange={(selectedOption) => setGender(selectedOption?.value)}
           />
           <input
