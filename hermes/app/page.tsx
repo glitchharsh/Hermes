@@ -32,8 +32,8 @@ export default function Login() {
     });
     const data = await useLogin(email, password);
     console.log("Data", data);
-    if (data && data.access) {
-      setToken(data.access);
+    if (data) {
+      setToken(data?.access);
       console.log("Token", token);
       alert("Login successful");
       router.push("/pages/sms");
