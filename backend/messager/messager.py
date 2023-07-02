@@ -3,7 +3,7 @@ import boto3
 
 class Messager:
 
-    def __init__(self, country_code, phone_number, name="", message):
+    def __init__(self, phone_number, message, name="", country_code="+91"):
         self.client = boto3.client('sns', 'ap-south-1')
         self.phone_number = phone_number
         self.country_code = country_code
@@ -22,7 +22,7 @@ class Messager:
 
 class AppMessager:
 
-    def __init__(self, country_code, phone_number, name=""):
+    def __init__(self, phone_number, name="", country_code="+91"):
         self.client = boto3.client('sns', 'ap-south-1')
         self.phone_number = phone_number
         self.country_code = country_code
