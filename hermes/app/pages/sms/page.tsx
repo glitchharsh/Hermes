@@ -9,6 +9,7 @@ import { Raleway } from "next/font/google";
 import Select from "react-select";
 import { useState } from "react";
 import useGenerator from "@/app/hooks/useGenerator";
+import { useUserDataContext } from "@/app/context/context";
 
 const raleway = Raleway({
   weight: ["400", "500", "700", "800"],
@@ -31,10 +32,7 @@ const options1 = [
   { value: "html", label: "HTML" },
 ];
 
-
-
 export default function Home() {
-
   const [type, setType] = useState("sms");
   const [formality, setFormality] = useState(50);
   const [prompt, setPrompt] = useState("");
@@ -43,30 +41,40 @@ export default function Home() {
   const [generatedText, setGeneratedText] = useState("");
   const [emailType, setEmailType] = useState("text");
 
-  const handleGenerate = async (e:any) => {
+  const { token } = useUserDataContext();
+
+  const handleGenerate = async (e: any) => {
     e.preventDefault();
-    if(prompt.trim() === "") {
+    if (prompt.trim() === "") {
       alert("Please enter a prompt");
       return;
     }
     const the_type = type === "sms" ? "sms" : emailType + " email";
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const data:any = await useGenerator({prompt, tone, formality, maxChars, the_type});
+    const data: any = await useGenerator({
+      prompt,
+      tone,
+      formality,
+      maxChars,
+      the_type,
+    });
     setGeneratedText(data);
-  }
+  };
 
-  const handleContentSend = async (e:any) => {
+  const handleContentSend = async (e: any) => {
     e.preventDefault();
-    if(generatedText.trim() === "") {
+    if (generatedText.trim() === "") {
       alert("Please generate text first");
       return;
     }
-    if(type === "sms") {
+    if (type === "sms") {
       alert("SMS sent");
     } else {
       alert("Email sent");
     }
-  }
+  };
+
+  console.log("<<<<,Token>>>>.", token);
 
   return (
     <div className="min-h-screen bg-[#ECFFFA] flex">
@@ -120,32 +128,32 @@ export default function Home() {
           <textarea
             className="border-2 h-[120px] w-full mt-3 pl-2 pt-2"
             placeholder="Tell us what you want to write..."
-            onChange = {(e) => setPrompt(e.target.value)}
+            onChange={(e) => setPrompt(e.target.value)}
           />
-          {generatedText && <textarea
-            className="border-2 h-[400px] w-full mt-10 pl-2 pt-2"
-            placeholder="Generated text.."
-            defaultValue={
-              generatedText
-            }
-          />}
+          {generatedText && (
+            <textarea
+              className="border-2 h-[400px] w-full mt-10 pl-2 pt-2"
+              placeholder="Generated text.."
+              defaultValue={generatedText}
+            />
+          )}
         </div>
         <div className="mx-auto">
-{!generatedText ? <button
-            className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] mt-12 font-extrabold`}
-            onClick={handleGenerate}
-          >
-          GENERATE  
-          </button>:
-          
-          <button
-            className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] mt-12 font-extrabold`}
-            onClick={handleContentSend}
-          >
-          SEND {type.toUpperCase()} 
-          </button>
-          
-          }
+          {!generatedText ? (
+            <button
+              className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] mt-12 font-extrabold`}
+              onClick={handleGenerate}
+            >
+              GENERATE
+            </button>
+          ) : (
+            <button
+              className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] mt-12 font-extrabold`}
+              onClick={handleContentSend}
+            >
+              SEND {type.toUpperCase()}
+            </button>
+          )}
         </div>
         <div
           className={`${raleway.className} text-center mt-14 font-medium text-xl`}
@@ -166,8 +174,10 @@ export default function Home() {
             Select Configurations
           </p>
           <div className="border-2 border-black px-3 py-5">
-            <input type="range" className="w-[200px]" 
-            onChange={(e) => setFormality( Number(e.target.value) )}
+            <input
+              type="range"
+              className="w-[200px]"
+              onChange={(e) => setFormality(Number(e.target.value))}
             />
             <div className="flex justify-between">
               <p className={`${raleway.className} font-medium text-base`}>
@@ -180,20 +190,24 @@ export default function Home() {
           </div>
           <div className="border-2 border-black px-3 py-5 w-[230px] flex justify-between items-center">
             <p className={`${raleway.className} font-medium text-base`}>Tone</p>
-            <Select options={options} defaultValue={
-              options[0]
-            }
-            onChange={(e) => {
-              if(e) setTone(e.value)
-              else setTone(options[0].value)
-            }}
+            <Select
+              options={options}
+              defaultValue={options[0]}
+              onChange={(e) => {
+                if (e) setTone(e.value);
+                else setTone(options[0].value);
+              }}
             />
           </div>
           {type === "sms" && (
             <div className="border-2 border-black px-3 py-5">
-              <input type="range" className="w-[200px]"
-              onChange = {(e) => setMaxChars( Math.floor (Number(e.target.value) *1.5))}
-              value = {maxChars/1.5}
+              <input
+                type="range"
+                className="w-[200px]"
+                onChange={(e) =>
+                  setMaxChars(Math.floor(Number(e.target.value) * 1.5))
+                }
+                value={maxChars / 1.5}
               />
               <div className="flex justify-between">
                 <p className={`${raleway.className} font-medium text-base`}>
@@ -210,12 +224,13 @@ export default function Home() {
               <p className={`${raleway.className} font-medium text-base`}>
                 Type
               </p>
-              <Select options={options1} 
-              defaultValue={ options1[0] }
-              onChange={(e) => {
-                if(e) setEmailType(e.value)
-                else setEmailType(options1[0].value)
-              }}
+              <Select
+                options={options1}
+                defaultValue={options1[0]}
+                onChange={(e) => {
+                  if (e) setEmailType(e.value);
+                  else setEmailType(options1[0].value);
+                }}
               />
             </div>
           )}

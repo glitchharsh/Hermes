@@ -8,6 +8,7 @@ import Button from "./components/Button";
 import Link from "next/link";
 import useLogin from "./hooks/useLogin";
 import { useRouter } from "next/navigation";
+import { useUserDataContext } from "./context/context";
 
 const raleway = Raleway({
   weight: ["400", "500", "700"],
@@ -19,9 +20,10 @@ const raleway = Raleway({
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState(null);
 
   const router = useRouter();
+
+  const { token, setToken } = useUserDataContext();
 
   const handleLogin = async () => {
     console.log("Login data:", {
@@ -29,10 +31,15 @@ export default function Login() {
       password,
     });
     const data = await useLogin(email, password);
-    setToken(data);
-    console.log("Token", data);
-    alert("Login successfull");
-    router.push("/pages/sms");
+    console.log("Data", data);
+    if (data && data.access) {
+      setToken(data.access);
+      console.log("Token", token);
+      alert("Login successful");
+      router.push("/pages/sms");
+    } else {
+      alert("Invalid email or password");
+    }
   };
 
   return (

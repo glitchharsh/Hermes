@@ -20,8 +20,7 @@ const useLogin = async (email, password) => {
     );
 
     let data = await response.text();
-    console.log(data);
-    return data?.access;
+    return data;
   } catch (error) {
     console.log(error);
   }
