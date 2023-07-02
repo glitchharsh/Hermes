@@ -7,6 +7,7 @@ import email from "./images/email.svg";
 import man from "./images/man.png";
 import { Raleway } from "next/font/google";
 import Select from "react-select";
+import { useState } from "react";
 
 const raleway = Raleway({
   weight: ["400", "500", "700", "800"],
@@ -24,7 +25,13 @@ const options = [
   { value: "humorous", label: "Humorous" },
 ];
 
+const options1 = [
+  { value: "text", label: "TEXT" },
+  { value: "html", label: "HTML" },
+];
+
 export default function Home() {
+  const [type, setType] = useState("sms");
   return (
     <div className="min-h-screen bg-[#ECFFFA] flex">
       <div className="w-1/4 border-r-2">
@@ -32,11 +39,21 @@ export default function Home() {
           <p className={`${raleway.className} text-xl font-medium text-center`}>
             What you want to send today?
           </p>
-          <button className="flex border-black p-3 border-2 w-[130px] items-center gap-x-3 h-[53px] hover:bg-white">
+          <button
+            className={`flex border-black p-3 border-2 w-[130px] items-center gap-x-3 h-[53px] hover:bg-white ${
+              type === "sms" && "bg-white"
+            }`}
+            onClick={() => setType("sms")}
+          >
             <Image src={sms} alt="sms" />
             <p className={`${raleway.className} font-medium uppercase`}>SMS</p>
           </button>
-          <button className="flex border-black p-3 border-2 w-[130px] items-center gap-x-3 h-[53px] hover:bg-white">
+          <button
+            className={`flex border-black p-3 border-2 w-[130px] items-center gap-x-3 h-[53px] hover:bg-white ${
+              type === "email" && "bg-white"
+            }`}
+            onClick={() => setType("email")}
+          >
             <Image src={email} alt="sms" />
             <p className={`${raleway.className} font-medium uppercase`}>
               Email
@@ -62,7 +79,7 @@ export default function Home() {
           <p
             className={`${raleway.className} font-bold mt-16 text-xl text-left`}
           >
-            Enter prompt to generate SMS Text
+            Enter prompt to generate {type.toUpperCase()} Text
           </p>
           <textarea
             className="border-2 h-[120px] w-full mt-3 pl-2 pt-2"
@@ -113,21 +130,38 @@ export default function Home() {
             <p className={`${raleway.className} font-medium text-base`}>Tone</p>
             <Select options={options} />
           </div>
-          <div className="border-2 border-black px-3 py-5">
-            <input type="range" className="w-[200px]" />
-            <div className="flex justify-between">
-              <p className={`${raleway.className} font-medium text-base`}>
-                Characters
-              </p>
-              <p className={`${raleway.className} font-medium text-base`}>
-                150
-              </p>
+          {type === "sms" && (
+            <div className="border-2 border-black px-3 py-5">
+              <input type="range" className="w-[200px]" />
+              <div className="flex justify-between">
+                <p className={`${raleway.className} font-medium text-base`}>
+                  Characters
+                </p>
+                <p className={`${raleway.className} font-medium text-base`}>
+                  150
+                </p>
+              </div>
             </div>
-          </div>
+          )}
+          {type === "email" && (
+            <div className="border-2 border-black px-3 py-5 w-[230px] flex justify-between items-center">
+              <p className={`${raleway.className} font-medium text-base`}>
+                Type
+              </p>
+              <Select options={options1} />
+            </div>
+          )}
           <div className="border-black border-2 flex flex-col mt-28 py-3 px-4 gap-y-3">
-            <p className={`${raleway.className} font-medium text-base`}>
-              Upload Contact Numbers
-            </p>
+            {type === "sms" && (
+              <p className={`${raleway.className} font-medium text-base`}>
+                Upload Contact Numbers
+              </p>
+            )}
+            {type === "email" && (
+              <p className={`${raleway.className} font-medium text-base`}>
+                Upload Email ID's
+              </p>
+            )}
             <div className="mx-auto">
               <button
                 className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] font-extrabold`}
