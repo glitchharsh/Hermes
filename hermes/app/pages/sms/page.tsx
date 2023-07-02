@@ -171,7 +171,7 @@ export default function Home() {
       </div>
       <div className="w-1/4 min-h-full">
         <div className="flex items-center gap-x-3 mt-5 absolute right-7">
-          <p>{name}</p>
+          <p>{name.toUpperCase()}</p>
           <Image src={man} alt="user" />
         </div>
         <div className="mt-24 mx-6 flex flex-col items-center gap-y-7">
