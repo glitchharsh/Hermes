@@ -19,9 +19,12 @@ const useLogin = async (email, password) => {
       }
     );
 
-    let data = await response.text();
-    console.log(data);
-    return data?.access;
+    if (response.status === 200) {
+      let data = await response.json();
+      return data;
+    } else {
+      throw new Error("Failed to login");
+    }
   } catch (error) {
     console.log(error);
   }
