@@ -1,8 +1,13 @@
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "./images/logo.png";
 import { Raleway } from "next/font/google";
 import Button from "./components/Button";
 import Link from "next/link";
+import useLogin from "./hooks/useLogin";
+import { useRouter } from "next/navigation";
 
 const raleway = Raleway({
   weight: ["400", "500", "700"],
@@ -11,7 +16,25 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export default function login() {
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [token, setToken] = useState(null);
+
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    console.log("Login data:", {
+      email,
+      password,
+    });
+    const data = await useLogin(email, password);
+    setToken(data);
+    console.log("Token", data);
+    alert("Login successfull");
+    router.push("/pages/sms");
+  };
+
   return (
     <div
       className={`${raleway.className} min-h-screen bg-[#ECFFFA] flex flex-col items-center align-center`}
@@ -26,13 +49,17 @@ export default function login() {
             type="text"
             className="border-2 border-black px-3 py-5 min-w-[500px] text-lg"
             placeholder="Your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             className="border-2 border-black px-3 py-5 min-w-[500px] text-lg mb-12"
             placeholder="Your Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <Button>Login</Button>
+          <Button onClick={handleLogin}>Login</Button>
         </div>
         <Link href="/pages/signup">
           <p className="mt-5 text-xl font-bold">New User? Signup</p>
