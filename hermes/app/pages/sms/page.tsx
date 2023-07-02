@@ -9,6 +9,7 @@ import { Raleway } from "next/font/google";
 import Select from "react-select";
 import { useState } from "react";
 import useGenerator from "@/app/hooks/useGenerator";
+import Recent from "@/app/components/Recent";
 import { useUserDataContext } from "@/app/context/context";
 import Modal from "@/app/components/Modal";
 
@@ -119,16 +120,7 @@ export default function Home() {
             </p>
           </button>
         </div>
-        <div className="flex flex-col gap-y-9">
-          <p
-            className={`${raleway.className} font-bold text-center mt-16 text-xl`}
-          >
-            Recent Generations
-          </p>
-          <div className="mx-16 border-2 h-[150px] bg-white"></div>
-          <div className="mx-16 border-2 h-[150px] bg-white"></div>
-          <div className="mx-16 border-2 h-[150px] bg-white"></div>
-        </div>
+            <Recent type={type} />
       </div>
       <div className="w-1/2 min-h-full flex flex-col">
         <div className="mt-5 mx-auto">
