@@ -15,7 +15,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from .serializers import MyTokenObtainPairSerializer, UserSerializer, SendEmailSerializer, VerifyEmailSerializer, SetNewPasswordSerializer, ForgotPasswordSerializer
 from .permissions import APITokenPermission
-from mailer import Email
+from mailer import AppEmail
 from .models import User, Verification, ForgotPassword
 
 
@@ -73,7 +73,7 @@ class SendEmailView(APIView):
             if obj.email_verified == True:
                 return Response({"data": "User already verified"}, status=HTTP_200_OK)
             otp = random.randrange(100000, 999999)
-            sent = Email(email, user.name).send_otp(otp)
+            sent = AppEmail(email, user.name).send_otp(otp)
             if not sent:
                 return Response({"data": "An unexpected error occured, please notify the devs"}, status=HTTP_200_OK)
             obj.email_otp = otp
@@ -132,7 +132,7 @@ class SendEmailPasswordView(APIView):
             else:
                 obj = obj[0]
             otp = random.randrange(100000, 999999)
-            sent = Email(email, user.name).send_otp(otp)
+            sent = AppEmail(email, user.name).send_otp(otp)
             if not sent:
                 return Response({"data": "An unexpected error occured"}, status=HTTP_200_OK)
             obj.email_otp = otp

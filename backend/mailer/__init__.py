@@ -1,3 +1,3 @@
-from mailer import Email
+from .mailer import Email, AppEmail
 
-__all__ = ['Email']
+__all__ = ['Email', 'AppEmail']

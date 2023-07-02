@@ -1,7 +1,7 @@
 from rest_framework.permissions import BasePermission
 from rest_framework.permissions import IsAuthenticated
 
-from main.settings import API_KEY
+from core.settings import API_KEY
 
 import os
 
