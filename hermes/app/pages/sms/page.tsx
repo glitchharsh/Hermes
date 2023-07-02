@@ -8,6 +8,7 @@ import man from "../../images/man.png";
 import { Raleway } from "next/font/google";
 import Select from "react-select";
 import { useState } from "react";
+import useGenerator from "@/app/hooks/useGenerator";
 
 const raleway = Raleway({
   weight: ["400", "500", "700", "800"],
@@ -30,8 +31,43 @@ const options1 = [
   { value: "html", label: "HTML" },
 ];
 
+
+
 export default function Home() {
+
   const [type, setType] = useState("sms");
+  const [formality, setFormality] = useState(50);
+  const [prompt, setPrompt] = useState("");
+  const [tone, setTone] = useState("Cheerful");
+  const [maxChars, setMaxChars] = useState(150);
+  const [generatedText, setGeneratedText] = useState("");
+  const [emailType, setEmailType] = useState("text");
+
+  const handleGenerate = async (e:any) => {
+    e.preventDefault();
+    if(prompt.trim() === "") {
+      alert("Please enter a prompt");
+      return;
+    }
+    const the_type = type === "sms" ? "sms" : emailType + " email";
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const data:any = await useGenerator({prompt, tone, formality, maxChars, the_type});
+    setGeneratedText(data);
+  }
+
+  const handleContentSend = async (e:any) => {
+    e.preventDefault();
+    if(generatedText.trim() === "") {
+      alert("Please generate text first");
+      return;
+    }
+    if(type === "sms") {
+      alert("SMS sent");
+    } else {
+      alert("Email sent");
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#ECFFFA] flex">
       <div className="w-1/4 border-r-2">
@@ -84,25 +120,39 @@ export default function Home() {
           <textarea
             className="border-2 h-[120px] w-full mt-3 pl-2 pt-2"
             placeholder="Tell us what you want to write..."
+            onChange = {(e) => setPrompt(e.target.value)}
           />
-          <textarea
+          {generatedText && <textarea
             className="border-2 h-[400px] w-full mt-10 pl-2 pt-2"
             placeholder="Generated text.."
-          />
+            defaultValue={
+              generatedText
+            }
+          />}
         </div>
         <div className="mx-auto">
+{!generatedText ? <button
+            className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] mt-12 font-extrabold`}
+            onClick={handleGenerate}
+          >
+          GENERATE  
+          </button>:
+          
           <button
             className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] mt-12 font-extrabold`}
+            onClick={handleContentSend}
           >
-            SEND
+          SEND {type.toUpperCase()} 
           </button>
+          
+          }
         </div>
-        <p
+        <div
           className={`${raleway.className} text-center mt-14 font-medium text-xl`}
         >
           AI-Powered Messaging, Simplified:{" "}
           <p className="text-[#0500FF] inline">Hermes</p> - Send with Impact
-        </p>
+        </div>
       </div>
       <div className="w-1/4 min-h-full">
         <div className="flex items-center gap-x-3 mt-5 absolute right-7">
@@ -116,29 +166,41 @@ export default function Home() {
             Select Configurations
           </p>
           <div className="border-2 border-black px-3 py-5">
-            <input type="range" className="w-[200px]" />
+            <input type="range" className="w-[200px]" 
+            onChange={(e) => setFormality( Number(e.target.value) )}
+            />
             <div className="flex justify-between">
               <p className={`${raleway.className} font-medium text-base`}>
                 Formality
               </p>
               <p className={`${raleway.className} font-medium text-base`}>
-                50%
+                {formality}%
               </p>
             </div>
           </div>
           <div className="border-2 border-black px-3 py-5 w-[230px] flex justify-between items-center">
             <p className={`${raleway.className} font-medium text-base`}>Tone</p>
-            <Select options={options} />
+            <Select options={options} defaultValue={
+              options[0]
+            }
+            onChange={(e) => {
+              if(e) setTone(e.value)
+              else setTone(options[0].value)
+            }}
+            />
           </div>
           {type === "sms" && (
             <div className="border-2 border-black px-3 py-5">
-              <input type="range" className="w-[200px]" />
+              <input type="range" className="w-[200px]"
+              onChange = {(e) => setMaxChars( Math.floor (Number(e.target.value) *1.5))}
+              value = {maxChars/1.5}
+              />
               <div className="flex justify-between">
                 <p className={`${raleway.className} font-medium text-base`}>
                   Characters
                 </p>
                 <p className={`${raleway.className} font-medium text-base`}>
-                  150
+                  {maxChars}
                 </p>
               </div>
             </div>
@@ -148,7 +210,13 @@ export default function Home() {
               <p className={`${raleway.className} font-medium text-base`}>
                 Type
               </p>
-              <Select options={options1} />
+              <Select options={options1} 
+              defaultValue={ options1[0] }
+              onChange={(e) => {
+                if(e) setEmailType(e.value)
+                else setEmailType(options1[0].value)
+              }}
+              />
             </div>
           )}
           <div className="border-black border-2 flex flex-col mt-28 py-3 px-4 gap-y-3">
@@ -159,7 +227,7 @@ export default function Home() {
             )}
             {type === "email" && (
               <p className={`${raleway.className} font-medium text-base`}>
-                Upload Email ID's
+                Upload Email ID&#39;s
               </p>
             )}
             <div className="mx-auto">
