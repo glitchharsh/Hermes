@@ -1,10 +1,5 @@
 class Templates:
     otp_template = """
-        From: Team MapAuth
-        To: {receiver}
-        MIME-Version: 1.0
-        Content-type: text/html
-        Subject: User Verification
         <div class="bg" style="font-family: sans-serif;background-color: #EFFEF4;display: flex;align-items: center;justify-content: center;padding: 20px;width:400px;">
         <div class="page">
         <div class="top" style="background-color: #FF914D;padding: 15px 10px;font-family: sans-serif;margin: 0;border-radius: 20px 20px 0 0;box-shadow: 1px 1px 10px -6px black;width:400px;">
