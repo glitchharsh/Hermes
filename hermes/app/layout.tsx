@@ -16,9 +16,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>
-      <p className="absolute bottom-12 text-center w-screen">
-      AI-Powered Messaging, Simplified: Hermes - Send with Impact
-      </p>
     </html>
   );
 }
