@@ -7,10 +7,11 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export default function Button({ children }: { children: React.ReactNode }) {
+export default function Button({ children, onClick }) {
   return (
     <button
       className={`${raleway.className} bg-[#5A4AE3] text-white font-medium uppercase py-3 px-6 rounded-[30px] min-w-[200px] font-bold text-lg`}
+      onClick={onClick}
     >
       {children}
     </button>
