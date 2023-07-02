@@ -120,7 +120,7 @@ export default function Home() {
             </p>
           </button>
         </div>
-            <Recent type={type} />
+        <Recent type={type} token={token} />
       </div>
       <div className="w-1/2 min-h-full flex flex-col">
         <div className="mt-5 mx-auto">
