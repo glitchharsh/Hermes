@@ -19,7 +19,7 @@ const useLogin = async (email, password) => {
       }
     );
 
-    let data = await response.text();
+    let data = await response.json();
     return data;
   } catch (error) {
     console.log(error);

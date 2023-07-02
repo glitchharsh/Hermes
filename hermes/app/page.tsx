@@ -9,6 +9,7 @@ import Link from "next/link";
 import useLogin from "./hooks/useLogin";
 import { useRouter } from "next/navigation";
 import { useUserDataContext } from "./context/context";
+import getName from "./hooks/getName";
 
 const raleway = Raleway({
   weight: ["400", "500", "700"],
@@ -23,7 +24,8 @@ export default function Login() {
 
   const router = useRouter();
 
-  const { token, setToken } = useUserDataContext();
+  //@ts-ignore
+  const { token, setToken, setName } = useUserDataContext();
 
   const handleLogin = async () => {
     console.log("Login data:", {
@@ -33,8 +35,10 @@ export default function Login() {
     const data = await useLogin(email, password);
     console.log("Data", data);
     if (data) {
+      //@ts-ignore
       setToken(data?.access);
-      console.log("Token", token);
+      const n = await getName(data?.access);
+      setName(n?.name);
       alert("Login successful");
       router.push("/pages/sms");
     } else {

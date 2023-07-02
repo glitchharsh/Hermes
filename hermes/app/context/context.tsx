@@ -5,9 +5,10 @@ import { createContext, useState, useContext } from "react";
 const UserDataContext = createContext({});
 
 export const UserDataContextProvider = ({ children }) => {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState("token");
+  const [name, setName] = useState("UserName");
   return (
-    <UserDataContext.Provider value={{ token, setToken }}>
+    <UserDataContext.Provider value={{ token, setToken, name, setName }}>
       {children}
     </UserDataContext.Provider>
   );

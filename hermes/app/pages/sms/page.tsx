@@ -33,6 +33,9 @@ const options1 = [
 ];
 
 export default function Home() {
+  //@ts-ignore
+  const { token, name } = useUserDataContext();
+
   const [type, setType] = useState("sms");
   const [formality, setFormality] = useState(50);
   const [prompt, setPrompt] = useState("");
@@ -40,8 +43,6 @@ export default function Home() {
   const [maxChars, setMaxChars] = useState(150);
   const [generatedText, setGeneratedText] = useState("");
   const [emailType, setEmailType] = useState("text");
-
-  const { token } = useUserDataContext();
 
   const handleGenerate = async (e: any) => {
     e.preventDefault();
@@ -57,6 +58,7 @@ export default function Home() {
       formality,
       maxChars,
       the_type,
+      token,
     });
     setGeneratedText(data);
   };
@@ -73,8 +75,6 @@ export default function Home() {
       alert("Email sent");
     }
   };
-
-  console.log("<<<<,Token>>>>.", token);
 
   return (
     <div className="min-h-screen bg-[#ECFFFA] flex">
@@ -164,7 +164,7 @@ export default function Home() {
       </div>
       <div className="w-1/4 min-h-full">
         <div className="flex items-center gap-x-3 mt-5 absolute right-7">
-          <p>Username</p>
+          <p>{name}</p>
           <Image src={man} alt="user" />
         </div>
         <div className="mt-24 mx-6 flex flex-col items-center gap-y-7">
