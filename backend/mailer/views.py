@@ -23,7 +23,7 @@ class EmailListView(APIView):
         emails = serializer.validated_data['reciever_emails']
         if len(emails) <= 0:
             return Response({'error':'no target emails sent'}, status=HTTP_200_OK)
-        reciever = list(json.loads(emails)['mails'])
+        reciever = list(emails)
         sender = serializer.validated_data['sender_email']
         password = serializer.validated_data['app_password']
         msg = serializer.validated_data['email_body']
