@@ -19,10 +19,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from mailer.views import EmailListView
+from messager.views import SMSListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('recommendation/', include('recommendation.urls')),
-    path('send_email/', EmailListView.as_view())
+    path('send_email/', EmailListView.as_view()),
+    path('send_sms/', SMSListView.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

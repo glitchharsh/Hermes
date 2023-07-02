@@ -19,6 +19,17 @@ class Messager:
         except Exception as ex:
             print(ex)
             return False
+    
+    def send_many(self):
+        msg = self.message.format(name=self.name)
+        try:
+            for num in self.phone_number:
+                p_num = self.country_code + num
+                self.client.publish(PhoneNumber=p_num, Message=msg)
+            return True
+        except Exception as ex:
+            print(ex)
+            return False
 
 class AppMessager:
 
