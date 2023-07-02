@@ -10,6 +10,7 @@ import Select from "react-select";
 import { useState } from "react";
 import useGenerator from "@/app/hooks/useGenerator";
 import { useUserDataContext } from "@/app/context/context";
+import Modal from "@/app/components/Modal";
 
 const raleway = Raleway({
   weight: ["400", "500", "700", "800"],
@@ -44,6 +45,8 @@ export default function Home() {
   const [generatedText, setGeneratedText] = useState("");
   const [emailType, setEmailType] = useState("text");
 
+  const [visible, setVisible] = useState(false);
+
   const handleGenerate = async (e: any) => {
     e.preventDefault();
     if (prompt.trim() === "") {
@@ -74,10 +77,22 @@ export default function Home() {
     } else {
       alert("Email sent");
     }
+    setVisible(false);
+  };
+
+  const openModal = () => {
+    setVisible(true);
   };
 
   return (
     <div className="min-h-screen bg-[#ECFFFA] flex">
+      {visible && (
+        <Modal
+          visible={visible}
+          setVisible={setVisible}
+          handleContentSend={handleContentSend}
+        />
+      )}
       <div className="w-1/4 border-r-2">
         <div className="bg-[#cfdaf4] mx-16 pt-7 px-10 flex flex-col gap-y-5 items-center pb-8">
           <p className={`${raleway.className} text-xl font-medium text-center`}>
@@ -149,7 +164,7 @@ export default function Home() {
           ) : (
             <button
               className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] mt-12 font-extrabold`}
-              onClick={handleContentSend}
+              onClick={openModal}
             >
               SEND {type.toUpperCase()}
             </button>
