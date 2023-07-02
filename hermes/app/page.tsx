@@ -7,6 +7,7 @@ import email from "./images/email.svg";
 import man from "./images/man.png";
 import { Raleway } from "next/font/google";
 import Select from "react-select";
+import UploadBox from "./components/UploadBox";
 
 const raleway = Raleway({
   weight: ["400", "500", "700", "800"],
@@ -69,7 +70,7 @@ export default function Home() {
             placeholder="Tell us what you want to write..."
           />
           <textarea
-            className="border-2 h-[400px] w-full mt-10 pl-2 pt-2"
+            className="border-2 h-[350px] w-full mt-10 pl-2 pt-2"
             placeholder="Generated text.."
           />
         </div>
@@ -124,23 +125,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="border-black border-2 flex flex-col mt-28 py-3 px-4 gap-y-3">
-            <p className={`${raleway.className} font-medium text-base`}>
-              Upload Contact Numbers
-            </p>
-            <div className="mx-auto">
-              <button
-                className={`${raleway.className} bg-[#5A4AE3] text-white uppercase rounded-[30px] py-2 px-[51px] font-extrabold`}
-              >
-                upload
-              </button>
-            </div>
-            <div className="w-[150px]">
-              <p className={`${raleway.className} font-bold text-base italic`}>
-                Supported Formats excel, csv
-              </p>
-            </div>
-          </div>
+<UploadBox />
         </div>
       </div>
     </div>
