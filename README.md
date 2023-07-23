@@ -1,4 +1,9 @@
 # Hermes
+### Mercor Hackathon Submission
+### FullStack Track (Track-1)
+
+## Deployed URL - Updated
+https://hermes-r8fc.vercel.app/
 
 ## Introduction
 Hermes is an innovative AI-powered messaging platform that enables users to effortlessly generate high-quality text and email content using OpenAI APIs. With an intuitive and user-friendly interface, Hermes makes it easy for individuals and businesses to create personalized and engaging messages. Leveraging the power of artificial intelligence, users can access advanced language models to craft compelling texts and emails that resonate with their recipients.
@@ -34,7 +39,7 @@ style="display:flex; align-items:center; gap:5px; font-size:20px;">
 - OpenAI API
 - AWS
 - Django
-- PostgreSQL
+- SQLite3
 
 ## Documentation
 Welcome to the Hermes documentation! This guide will help you get started with Hermes, an innovative AI-powered messaging platform. With Hermes, you can effortlessly generate high-quality text and email content using OpenAI APIs, delivering personalized and engaging messages to your recipients. <br />
