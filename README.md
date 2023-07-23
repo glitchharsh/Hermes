@@ -1,7 +1,4 @@
 # Hermes
-### Mercor Hackathon Submission
-### FullStack Track (Track-1)
-
 ## Deployed URL - Updated
 https://hermes-r8fc.vercel.app/
 
